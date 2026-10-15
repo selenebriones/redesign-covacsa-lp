@@ -1,0 +1,394 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CotizaForm from '../components/CotizaForm.astro';
+import { IMG, CONTACTO, valvulas, tuberias, conexiones, marcas } from '../data/covacsa';
+
+// En la cuadrícula de conexiones: Bridas va en grande (2x2) y estas tres en horizontal (2x1) para cerrar filas
+const conexionesAnchas = ['Empaques', 'Conexiones de FoFo', 'Swages'];
+
+// Centro de los puntos rojos dibujados en covacsa-mapa.png (712×527), en % del ancho y alto
+const puntosMapa = [
+  { x: 22.4, y: 20.52 },
+  { x: 25.25, y: 29.86 },
+  { x: 56.84, y: 43.85 },
+  { x: 60.38, y: 63.78 },
+  { x: 59.41, y: 71.16 },
+];
+---
+
+<Layout title="Válvulas y Tuberías Industriales en Monterrey | Covacsa">
+
+  <!-- ============================================ -->
+  <!-- HERO                                         -->
+  <!-- ============================================ -->
+  <section class="relative pt-28 pb-28 md:pt-36 md:pb-40 overflow-hidden bg-covacsa-blue">
+    <img
+      src="/bg_hero_covacsa.webp"
+      alt=""
+      width="1376"
+      height="768"
+      aria-hidden="true"
+      fetchpriority="high"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-linear-to-r from-covacsa-blue/95 via-covacsa-blue/80 to-covacsa-blue/40" aria-hidden="true"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+      <div class="lg:col-span-8 space-y-6 gsap-hero-text">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold tracking-wide uppercase backdrop-blur">
+          <i class="ph ph-shield-check text-covacsa-red text-base"></i>
+          <span>Líder en productos industriales</span>
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.1]">
+          Válvulas y Tuberías <span class="text-covacsa-red underline decoration-covacsa-red/50 underline-offset-8">Industriales</span>
+        </h1>
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+          <a href="#contacto" class="inline-flex items-center justify-center gap-3 bg-covacsa-red hover:bg-red-700 text-white font-bold text-base px-8 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-covacsa-red/25 hover:shadow-xl hover:-translate-y-1">
+            <span>Solicitar Cotización</span>
+            <i class="ph ph-arrow-right text-lg"></i>
+          </a>
+          <a href={CONTACTO.telefonoHref} class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold text-base px-6 py-4 rounded-xl transition-all duration-300 border border-white/30 backdrop-blur">
+            <i class="ph ph-phone text-xl text-covacsa-red"></i>
+            <span>{CONTACTO.telefono}</span>
+          </a>
+        </div>
+
+        <div class="pt-8 border-t border-white/20 grid grid-cols-3 gap-4">
+          <div>
+            <p class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white">20 años</p>
+            <p class="text-xs md:text-sm text-gray-300 font-medium">Entregas en tiempo récord</p>
+          </div>
+          <div>
+            <p class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white">Monterrey</p>
+            <p class="text-xs md:text-sm text-gray-300 font-medium">Sucursales en Nuevo León</p>
+          </div>
+          <div>
+            <p class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white">Todo México</p>
+            <p class="text-xs md:text-sm text-gray-300 font-medium">Cobertura de embarques</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- MARCAS ALIADAS                               -->
+  <!-- ============================================ -->
+  <section class="relative z-10 pb-10 bg-covacsa-blue">
+    <!-- Corte diagonal sobre el hero: sube hacia la derecha -->
+    <div class="absolute inset-x-0 top-0 h-32 bg-covacsa-blue origin-left -skew-y-3 pointer-events-none" aria-hidden="true"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+      <p class="text-center text-xs font-bold uppercase tracking-widest text-white/60 mb-8">
+        Aliados de marcas internacionales
+      </p>
+      <ul class="grid grid-cols-3 md:grid-cols-6 items-center gap-x-8 gap-y-6">
+        {marcas.map((marca) => (
+          <li class="flex justify-center">
+            <img
+              src={`${IMG}/${marca.imagen}`}
+              alt={marca.nombre}
+              width="300"
+              height="80"
+              loading="lazy"
+              class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity duration-300"
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- VÁLVULAS                                     -->
+  <!-- ============================================ -->
+  <section id="valvulas" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-3xl mx-auto mb-14 space-y-4 gsap-reveal">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-covacsa-red">Línea de control</p>
+        <h2 class="text-3xl md:text-5xl font-black text-covacsa-blue">Válvulas</h2>
+        <p class="text-gray-600 text-base">{valvulas.texto}</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {valvulas.destacadas.map((producto, i) => (
+          <article class:list={[
+            'bg-covacsa-gray-light rounded-3xl border border-gray-200 hover:border-covacsa-blue/30 hover:scale-[1.02] hover:shadow-xl transition-all duration-300 p-6 flex flex-col group gsap-reveal',
+            i === 0 && 'sm:col-span-2 lg:row-span-2',
+          ]}>
+            <div class="flex-1 flex items-center justify-center">
+              <img
+                src={`${IMG}/${producto.imagen}`}
+                alt={producto.titulo}
+                width="350"
+                height="280"
+                loading="lazy"
+                class:list={['w-full object-contain group-hover:scale-105 transition-transform duration-500', i === 0 ? 'max-h-[26rem]' : 'max-h-56']}
+              />
+            </div>
+            <h3 class:list={['font-bold text-covacsa-blue mt-4', i === 0 ? 'text-2xl' : 'text-lg']}>{producto.titulo}</h3>
+          </article>
+        ))}
+
+        <div class="sm:col-span-2 lg:col-span-1 bg-covacsa-blue text-white rounded-3xl p-6 flex flex-col justify-between gap-6 gsap-reveal">
+          <div>
+            <div class="w-12 h-12 bg-covacsa-red rounded-2xl flex items-center justify-center text-2xl mb-5 shadow-md">
+              <i class="ph ph-ruler"></i>
+            </div>
+            <p class="text-xs font-mono text-gray-300 font-bold uppercase tracking-wider">Materiales y medidas</p>
+            <p class="text-base leading-relaxed mt-2">
+              {valvulas.texto} <strong class="font-black">Medidas: {valvulas.medidas}</strong>
+            </p>
+          </div>
+          <a href="#contacto" class="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-covacsa-red transition-colors">
+            Contáctanos <i class="ph ph-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-6 bg-covacsa-gray-light rounded-3xl border border-gray-200 p-6 md:p-8 gsap-reveal">
+        <h3 class="text-sm font-black uppercase tracking-wider text-covacsa-blue mb-5">Tipos de válvula disponibles</h3>
+        <ul class="flex flex-wrap gap-2.5">
+          {valvulas.tipos.map((tipo) => (
+            <li class="inline-flex items-center gap-1.5 bg-white border border-gray-200 rounded-full px-3.5 py-1.5 text-xs font-semibold text-covacsa-dark">
+              <i class="ph ph-check-circle text-covacsa-red"></i> {tipo}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- TUBERÍAS                                     -->
+  <!-- ============================================ -->
+  <section id="tuberias" class="py-24 bg-covacsa-gray-light">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-3xl mx-auto mb-14 space-y-4 gsap-reveal">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-covacsa-red">Conducción de fluidos</p>
+        <h2 class="text-3xl md:text-5xl font-black text-covacsa-blue">Tuberías</h2>
+        <p class="text-gray-600 text-base">{tuberias.texto}</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {tuberias.destacadas.map((producto) => (
+          <article class="bg-white rounded-3xl border border-gray-200 hover:border-covacsa-blue/30 hover:scale-[1.02] hover:shadow-xl transition-all duration-300 p-6 flex flex-col group gsap-reveal">
+            <div class="flex-1 flex items-center justify-center">
+              <img
+                src={`${IMG}/${producto.imagen}`}
+                alt={producto.titulo}
+                width="350"
+                height="280"
+                loading="lazy"
+                class="w-full max-h-56 object-contain group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <h3 class="text-lg font-bold text-covacsa-blue mt-4">{producto.titulo}</h3>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-6 bg-covacsa-blue text-white rounded-3xl p-6 md:p-8 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10 gsap-reveal">
+        <div class="flex-1">
+          <h3 class="text-sm font-black uppercase tracking-wider text-gray-300 mb-5">También manejamos</h3>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm font-semibold">
+            {tuberias.tipos.map((tipo) => (
+              <li class="flex items-start gap-2"><i class="ph ph-check-circle text-covacsa-red text-lg shrink-0"></i> {tipo}</li>
+            ))}
+          </ul>
+        </div>
+        <a href="#contacto" class="inline-flex self-start lg:self-center items-center gap-2 bg-covacsa-red hover:bg-red-700 text-white text-sm font-bold px-6 py-3.5 rounded-xl whitespace-nowrap transition-colors">
+          Contáctanos <i class="ph ph-arrow-right"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- BRIDAS, CONEXIONES Y COMPLEMENTOS            -->
+  <!-- ============================================ -->
+  <section id="conexiones" class="pt-24 pb-36 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-3xl mx-auto mb-14 space-y-4 gsap-reveal">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-covacsa-red">Línea de uniones</p>
+        <h2 class="text-3xl md:text-5xl font-black text-covacsa-blue">Bridas, Conexiones y Complementos</h2>
+        <p class="text-gray-600 text-base">Todo lo necesario para el armado completo de tus líneas de tubería.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 grid-flow-dense gap-6">
+        {conexiones.map((producto, i) => {
+          const destacada = i === 0;
+          const ancha = conexionesAnchas.includes(producto.titulo);
+          return (
+            <article class:list={[
+              'rounded-3xl border p-6 flex group hover:scale-[1.02] transition-all duration-300 gsap-reveal',
+              destacada
+                ? 'sm:col-span-2 lg:row-span-2 flex-col bg-covacsa-blue border-covacsa-blue text-white hover:shadow-xl hover:shadow-covacsa-blue/30'
+                : 'bg-covacsa-gray-light border-gray-200 hover:border-covacsa-red/40 hover:shadow-lg',
+              ancha && 'sm:col-span-2 flex-col sm:flex-row sm:items-center gap-6',
+              !destacada && !ancha && 'flex-col',
+            ]}>
+              <div class:list={['flex items-center justify-center', destacada && 'flex-1 bg-white rounded-2xl p-6 mb-6', ancha && 'sm:w-1/2 shrink-0']}>
+                <img
+                  src={`${IMG}/${producto.imagen}`}
+                  alt={producto.titulo}
+                  width="350"
+                  height="280"
+                  loading="lazy"
+                  class:list={['w-full object-contain group-hover:scale-105 transition-transform duration-500', destacada ? 'max-h-96' : 'max-h-48']}
+                />
+              </div>
+              <div class:list={[!ancha && !destacada && 'mt-4']}>
+                {destacada && <span class="text-xs font-mono text-gray-300 font-bold uppercase tracking-wider">Producto principal</span>}
+                <h3 class:list={['font-bold', destacada ? 'text-2xl text-white mt-1 mb-3' : 'text-lg text-covacsa-blue mb-2']}>{producto.titulo}</h3>
+                <p class:list={['leading-relaxed', destacada ? 'text-sm text-gray-200' : 'text-xs text-gray-600']}>{producto.texto}</p>
+                {destacada && (
+                  <a href="#contacto" class="inline-flex items-center gap-2 mt-6 bg-covacsa-red hover:bg-red-700 text-white text-sm font-bold px-5 py-3 rounded-xl transition-colors">
+                    Cotizar bridas <i class="ph ph-arrow-right"></i>
+                  </a>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- NOSOTROS                                     -->
+  <!-- ============================================ -->
+  <section class="relative z-10 py-24 bg-covacsa-blue text-white">
+    <!-- Cortes diagonales arriba y abajo, paralelos al de la barra de marcas -->
+    <div class="absolute inset-x-0 top-0 h-32 bg-covacsa-blue origin-left -skew-y-3 pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 bottom-0 h-32 bg-covacsa-blue origin-right -skew-y-3 pointer-events-none" aria-hidden="true"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <div class="space-y-8 gsap-reveal">
+        <h2 class="text-3xl md:text-5xl font-black leading-tight">
+          20 años trabajando para ofrecerte el mejor servicio con <span class="text-covacsa-red">entregas en tiempo récord</span>
+        </h2>
+
+        <ul class="space-y-5">
+          <li class="flex items-start gap-4">
+            <span class="w-11 h-11 bg-white/10 rounded-xl flex items-center justify-center text-xl text-covacsa-red shrink-0"><i class="ph ph-map-pin"></i></span>
+            <span class="text-lg font-bold pt-2">Sucursales en Monterrey y Nuevo León</span>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="w-11 h-11 bg-white/10 rounded-xl flex items-center justify-center text-xl text-covacsa-red shrink-0"><i class="ph ph-truck"></i></span>
+            <span class="text-lg font-bold pt-2">Cobertura de embarques a toda la República</span>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="w-11 h-11 bg-white/10 rounded-xl flex items-center justify-center text-xl text-covacsa-red shrink-0"><i class="ph ph-handshake"></i></span>
+            <span class="text-lg font-bold pt-2">Aliados de marcas internacionales</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="relative gsap-reveal">
+        <img src={`${IMG}/covacsa-mapa.png`} alt="Mapa de cobertura de Covacsa en México" width="712" height="527" loading="lazy" class="w-full h-auto" />
+        {puntosMapa.map((punto, i) => (
+          <span
+            class="absolute w-[2%] aspect-square -translate-x-1/2 -translate-y-1/2"
+            style={`left: ${punto.x}%; top: ${punto.y}%;`}
+            aria-hidden="true"
+          >
+            <span
+              class="absolute inset-0 rounded-full bg-covacsa-red motion-safe:animate-map-pulse"
+              style={`animation-delay: ${i * 0.45}s;`}
+            ></span>
+            <span class="absolute inset-0 rounded-full bg-covacsa-red ring-2 ring-white/70"></span>
+          </span>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- CONTACTO                                     -->
+  <!-- ============================================ -->
+  <section id="contacto" class="relative pt-36 pb-24 bg-covacsa-gray-light overflow-hidden">
+    <img
+      src="/bg_contacto2.webp"
+      alt=""
+      aria-hidden="true"
+      width="1000"
+      height="667"
+      loading="lazy"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-linear-to-r from-covacsa-gray-light/95 via-covacsa-gray-light/85 to-covacsa-gray-light/60" aria-hidden="true"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <div class="space-y-6 gsap-reveal">
+        <span class="inline-block bg-covacsa-red text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-widest">Contacto</span>
+        <h2 class="text-3xl md:text-5xl font-black text-covacsa-blue">Cotiza tus soluciones industriales</h2>
+        <p class="text-gray-700 font-medium">Déjanos tus datos y el detalle de lo que necesitas, o comunícate directamente con nuestro equipo de ventas.</p>
+
+        <div class="space-y-3 pt-2">
+          <a href={CONTACTO.telefonoHref} class="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl p-4 hover:border-covacsa-red/40 transition-colors">
+            <span class="w-11 h-11 bg-covacsa-blue rounded-xl flex items-center justify-center text-xl text-white shrink-0"><i class="ph ph-phone"></i></span>
+            <span>
+              <span class="block text-xs font-bold uppercase text-gray-500">Llámanos</span>
+              <span class="block text-lg font-black text-covacsa-blue">{CONTACTO.telefono}</span>
+            </span>
+          </a>
+          <a href={`mailto:${CONTACTO.correo}`} class="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl p-4 hover:border-covacsa-red/40 transition-colors">
+            <span class="w-11 h-11 bg-covacsa-blue rounded-xl flex items-center justify-center text-xl text-white shrink-0"><i class="ph ph-envelope-simple"></i></span>
+            <span class="min-w-0">
+              <span class="block text-xs font-bold uppercase text-gray-500">Escríbenos</span>
+              <span class="block text-lg font-black text-covacsa-blue break-all">{CONTACTO.correo}</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="gsap-reveal">
+        <CotizaForm id="cotiza-contacto" />
+      </div>
+
+    </div>
+  </section>
+
+</Layout>
+
+<!-- ============================================ -->
+<!-- ANIMACIONES GSAP + SCROLLTRIGGER             -->
+<!-- ============================================ -->
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduceMotion) {
+    gsap.from('.gsap-hero-text', { duration: 1, y: 40, opacity: 0, ease: 'power3.out' });
+
+    // clearProps devuelve el control del transform a Tailwind para los hover:scale
+    gsap.utils.toArray<HTMLElement>('.gsap-reveal').forEach((elem) => {
+      gsap.from(elem, {
+        scrollTrigger: { trigger: elem, start: 'top 85%', once: true },
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        clearProps: 'transform,opacity',
+      });
+    });
+  }
+</script>

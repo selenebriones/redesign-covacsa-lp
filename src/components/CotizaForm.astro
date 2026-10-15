@@ -1,0 +1,76 @@
+---
+interface Props {
+  id: string;
+  class?: string;
+}
+
+const { id, class: className = '' } = Astro.props;
+
+const inputClass =
+  'w-full bg-covacsa-gray-light border border-gray-300 rounded-xl px-4 py-3 text-sm text-covacsa-dark focus:outline-none focus:border-covacsa-red focus:ring-2 focus:ring-covacsa-red/20 transition-colors';
+const labelClass = 'block text-xs font-bold uppercase text-covacsa-blue mb-2';
+---
+
+<!-- Mismos campos que la LP actual (nombre, correo, telefono, mensaje + utm_*) -->
+<form id={id} class:list={['lead-form bg-white text-covacsa-dark rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5', className]} novalidate>
+  <p class="text-xl font-black text-covacsa-blue">Cotiza tus soluciones industriales:</p>
+
+  <div>
+    <label for={`${id}-nombre`} class={labelClass}>Nombre y Apellido *</label>
+    <input id={`${id}-nombre`} name="nombre" type="text" autocomplete="name" required minlength="3" class={inputClass} />
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <div>
+      <label for={`${id}-correo`} class={labelClass}>Email *</label>
+      <input id={`${id}-correo`} name="correo" type="email" autocomplete="email" required class={inputClass} />
+    </div>
+    <div>
+      <label for={`${id}-telefono`} class={labelClass}>Teléfono *</label>
+      <input id={`${id}-telefono`} name="telefono" type="tel" inputmode="tel" autocomplete="tel" required minlength="10" class={inputClass} />
+    </div>
+  </div>
+
+  <div>
+    <label for={`${id}-mensaje`} class={labelClass}>Comentarios</label>
+    <textarea id={`${id}-mensaje`} name="mensaje" rows="3" placeholder="Producto, medida, material y cantidad" class={inputClass}></textarea>
+  </div>
+
+  <input type="hidden" name="utm_id" />
+  <input type="hidden" name="utm_campaign" />
+  <input type="hidden" name="utm_source" />
+  <input type="hidden" name="utm_medium" />
+  <input type="hidden" name="utm_content" />
+  <input type="hidden" name="utm_term" />
+
+  <button type="submit" class="w-full bg-covacsa-red hover:bg-red-700 text-white font-extrabold text-base py-4 rounded-xl transition-all duration-300 shadow-lg shadow-covacsa-red/30 hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-60 disabled:hover:translate-y-0">
+    <i class="ph ph-paper-plane-tilt text-xl"></i>
+    <span>Enviar</span>
+  </button>
+
+  <p class="lead-form-status text-center text-xs text-gray-500 min-h-4" aria-live="polite"></p>
+</form>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  document.querySelectorAll<HTMLFormElement>('.lead-form').forEach((form) => {
+    // Rellena los UTM una sola vez por formulario
+    if (form.dataset.ready) return;
+    form.dataset.ready = '1';
+
+    form.querySelectorAll<HTMLInputElement>('input[name^="utm_"]').forEach((input) => {
+      input.value = params.get(input.name) ?? '';
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      // TODO: conectar el envío. La LP actual hace POST a _send.php y redirige a gracias.php
+      const status = form.querySelector('.lead-form-status');
+      if (status) status.textContent = 'Formulario en desarrollo: el envío aún no está conectado.';
+      console.warn('[lead-form] Sin destino configurado.', Object.fromEntries(new FormData(form)));
+    });
+  });
+</script>
