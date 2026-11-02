@@ -95,16 +95,19 @@ const puntosMapa = [
       <p class="text-center text-xs font-bold uppercase tracking-widest text-white/60 mb-8">
         Aliados de marcas internacionales
       </p>
-      <ul class="grid grid-cols-3 md:grid-cols-6 items-center gap-x-8 gap-y-6">
+      <ul class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 items-center gap-x-8 gap-y-6">
         {marcas.map((marca) => (
           <li class="flex justify-center">
             <img
-              src={`${IMG}/${marca.imagen}`}
+              src={marca.local ?? `${IMG}/${marca.imagen}`}
               alt={marca.nombre}
               width="300"
               height="80"
               loading="lazy"
-              class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity duration-300"
+              class:list={[
+                'w-auto object-contain opacity-75 hover:opacity-100 transition-opacity duration-300',
+                marca.alto ? 'h-14 md:h-16' : 'h-8 md:h-10',
+              ]}
             />
           </li>
         ))}
