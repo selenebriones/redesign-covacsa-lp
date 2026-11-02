@@ -119,11 +119,13 @@ export const conexiones: Producto[] = [
   },
 ];
 
-export const marcas = [
+// `imagen` vive en IMG (sitio de Covacsa); `local` en /public. `alto` para logos casi cuadrados.
+export const marcas: { nombre: string; imagen?: string; local?: string; alto?: boolean }[] = [
   { nombre: 'Spirax Sarco', imagen: 'icono-logo-spirax.png' },
   { nombre: 'Bray', imagen: 'icono-logo-bray.png' },
   { nombre: 'Rockwell', imagen: 'icono-logo-rockwell.png' },
   { nombre: 'Vayremex', imagen: 'icono-logo-vayremex.png' },
-  { nombre: 'Klinger', imagen: 'icono-logo-klinger.png' },
-  { nombre: 'Emerson', imagen: 'icono-emerson.png' },
+  { nombre: 'Keystone', local: '/marcas/keystone.webp' },
+  { nombre: 'Walworth', local: '/marcas/walworth.webp', alto: true },
+  { nombre: 'Tenaris Tamsa', local: '/marcas/tenaristamsa.webp' },
 ];
