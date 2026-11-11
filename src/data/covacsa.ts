@@ -1,11 +1,16 @@
 // Contenido de https://www.covacsa.com.mx/valvulas-y-bridas/ (texto original en /contenido-fuente.md)
 
-// La LP se publica en covacsa.com.mx/valvulas-y-bridas/ (ver `base` en astro.config.mjs).
-// BASE siempre termina en "/" para poder concatenar rutas de public/.
+// BASE es '/valvulas-y-bridas/' en producción y '/' en QA (ver astro.config.mjs).
+// Siempre termina en "/" para poder concatenar rutas de public/.
 export const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 export const IMG = `${BASE}img`;
 
-export const SITIO = 'https://www.covacsa.com.mx';
+/** Build de QA (Vercel): sin GTM, noindex y formulario simulado */
+export const ES_QA = import.meta.env.PUBLIC_QA === true;
+
+// URL definitiva de la LP. Canonical, og:url y og:image apuntan aquí también desde QA.
+// Sin www: el dominio principal redirige www → covacsa.com.mx y usa ese canonical.
+export const URL_PRODUCCION = 'https://covacsa.com.mx/valvulas-y-bridas/';
 export const GTM_ID = 'GTM-KD7VLWSD';
 
 export const CONTACTO = {

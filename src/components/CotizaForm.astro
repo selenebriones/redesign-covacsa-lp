@@ -58,7 +58,7 @@ const labelClass = 'block text-xs font-bold uppercase text-covacsa-blue mb-2';
 </form>
 
 <script>
-  import { BASE, CONTACTO } from '../data/covacsa';
+  import { BASE, CONTACTO, ES_QA } from '../data/covacsa';
 
   const TELEFONO = CONTACTO.telefono;
   const CORREO = CONTACTO.correo;
@@ -95,6 +95,13 @@ const labelClass = 'block text-xs font-bold uppercase text-covacsa-blue mb-2';
         return;
       }
       data.delete('sitio_web');
+
+      // QA (Vercel no ejecuta PHP): no se envía nada, solo se recorre el flujo hasta gracias
+      if (ES_QA) {
+        console.info('[lead-form] QA: envío simulado', Object.fromEntries(data));
+        window.location.href = gracias;
+        return;
+      }
 
       if (button) button.disabled = true;
       setStatus('Enviando…');

@@ -13,7 +13,21 @@ npm run dev                                 # http://localhost:4335/valvulas-y-b
 npm run build                               # genera dist/
 ```
 
-El sitio usa `base: '/valvulas-y-bridas/'` (ver `astro.config.mjs`). Las rutas a archivos de `public/` se arman con `BASE` o `IMG` de `src/data/covacsa.ts`; no uses rutas absolutas como `/img/...`.
+En producción, el sitio usa `base: '/valvulas-y-bridas/'` (ver `astro.config.mjs`). Las rutas a archivos de `public/` se arman con `BASE` o `IMG` de `src/data/covacsa.ts`; no uses rutas absolutas como `/img/...`.
+
+## QA en Vercel
+
+Vercel despliega `main` para QA. Cuando el build detecta Vercel (`VERCEL=1`), cambia a modo QA:
+
+| | Producción (covacsa.com.mx) | QA (Vercel) |
+|---|---|---|
+| Ruta | `/valvulas-y-bridas/` | `/` (raíz) |
+| GTM / GA4 / Ads | Sí | No, para no ensuciar la medición |
+| Formulario | Envía a `_send.php` | Simulado: no envía nada, solo lleva a gracias |
+| Indexación | Indexable, canonical propio | `noindex, nofollow` (meta y header en `vercel.json`) |
+| Canonical / Open Graph | URL de producción | También apuntan a producción |
+
+Además, en QA se muestra una etiqueta amarilla en la esquina inferior izquierda. Para generar el build de QA en local: `COVACSA_QA=1 npx astro build --outDir dist-qa`.
 
 ## Formulario y credenciales
 
@@ -40,6 +54,13 @@ Si falta `public/_config.php` al compilar, el sitio se genera igual, pero el for
 - `gracias.php` redirige (301) a `gracias.html`, por si alguna configuración usa todavía la URL anterior.
 - Los parámetros `utm_*` de la URL se envían con el lead.
 
+## SEO
+
+- El canonical es `https://covacsa.com.mx/valvulas-y-bridas/`, **sin www**, igual que el sitio principal (WordPress), que redirige `www` → `covacsa.com.mx`.
+- La página tiene title, description, Open Graph y Twitter Card con `og-covacsa.jpg` (1200×630), y JSON-LD `Organization`.
+- `gracias.html` lleva `noindex` y no tiene canonical.
+- El `robots.txt` y el sitemap son los del WordPress, en la raíz del dominio; esta LP no los controla.
+
 ## Deploy
 
 1. Haz el build con `public/_config.php` en su lugar.
@@ -53,3 +74,4 @@ Si falta `public/_config.php` al compilar, el sitio se genera igual, pero el for
 
 - [ ] Enlazar el aviso de privacidad (LFPDPPP) en el formulario y en el footer. Covacsa tiene que proporcionarlo.
 - [ ] En GTM, confirmar que la conversión de Ads se dispara con `generate_lead` o con la vista de `gracias.html`.
+- [ ] En el servidor, redirigir `www` y `http` a `https://covacsa.com.mx/valvulas-y-bridas/`. Hoy la carpeta responde en las cuatro variantes; el canonical lo mitiga, pero la redirección es lo correcto.

@@ -1,7 +1,7 @@
 ---
 import '@phosphor-icons/web/regular';
 import '../styles/global.css';
-import { BASE, IMG, CONTACTO, SITIO, GTM_ID } from '../data/covacsa';
+import { BASE, IMG, CONTACTO, GTM_ID, ES_QA, URL_PRODUCCION } from '../data/covacsa';
 
 interface Props {
   title: string;
@@ -16,8 +16,30 @@ const {
   description = 'Válvulas, tuberías, bridas y conexiones industriales en Monterrey, Nuevo León. 20 años de experiencia y embarques a toda la República. Cotiza con Covacsa.',
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname.replace(/index\.html$/, ''), SITIO).href;
-const ogImage = new URL(`${BASE}og-covacsa.jpg`, SITIO).href;
+// Ruta de la página relativa a la LP ('' en el inicio, 'gracias.html'…), igual en producción y QA
+const ruta = Astro.url.pathname.slice(BASE.length).replace(/index\.html$/, '');
+const canonical = new URL(ruta, URL_PRODUCCION).href;
+const ogImage = new URL('og-covacsa.jpg', URL_PRODUCCION).href;
+const robots = ES_QA ? 'noindex, nofollow' : noindex ? 'noindex, follow' : null;
+
+const datosEstructurados = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Covacsa',
+  url: 'https://covacsa.com.mx/',
+  logo: new URL('img/covacsa-logotipo-color.webp', URL_PRODUCCION).href,
+  email: CONTACTO.correo,
+  telephone: '+52 81 2721 9555',
+  areaServed: 'MX',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    telephone: '+52 81 2721 9555',
+    email: CONTACTO.correo,
+    areaServed: 'MX',
+    availableLanguage: 'es',
+  },
+};
 
 // En el inicio las anclas van solas para no recargar la página (y perder los UTM de la URL)
 const enInicio = Astro.url.pathname === BASE || Astro.url.pathname === `${BASE}index.html`;
@@ -35,15 +57,19 @@ const nav = [
 <html lang="es-MX">
   <head>
     <meta charset="UTF-8" />
-    <!-- Google Tag Manager (carga GA4 y Google Ads) -->
-    <script is:inline define:vars={{ gtmId: GTM_ID }}>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
-    </script>
+    <!-- Google Tag Manager (carga GA4 y Google Ads). No se carga en QA para no ensuciar la medición -->
+    {!ES_QA && (
+      <script is:inline define:vars={{ gtmId: GTM_ID }}>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+      </script>
+    )}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#022b62" />
     <title>{title}</title>
-    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical} />}
+    {robots && <meta name="robots" content={robots} />}
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(datosEstructurados)} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_MX" />
     <meta property="og:site_name" content="Covacsa" />
@@ -65,7 +91,12 @@ const nav = [
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   </head>
   <body class="bg-covacsa-white text-covacsa-dark font-sans antialiased">
-    <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    {!ES_QA && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>}
+    {ES_QA && (
+      <div class="fixed bottom-3 left-3 z-[60] bg-amber-400 text-covacsa-dark text-xs font-bold px-3 py-1.5 rounded-full shadow-lg pointer-events-none">
+        QA · sin GTM · formulario simulado
+      </div>
+    )}
     <header class="fixed inset-x-0 top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between gap-6">
         <a href={enInicio ? '#' : BASE} aria-label="Covacsa, inicio">
