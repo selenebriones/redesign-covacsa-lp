@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CotizaForm from '../components/CotizaForm.astro';
-import { IMG, CONTACTO, valvulas, tuberias, conexiones, marcas } from '../data/covacsa';
+import { BASE, IMG, CONTACTO, valvulas, tuberias, conexiones, marcas } from '../data/covacsa';
 
 // En la cuadrícula de conexiones: Bridas va en grande (2x2) y estas tres en horizontal (2x1) para cerrar filas
 const conexionesAnchas = ['Empaques', 'Conexiones de FoFo', 'Swages'];
 
-// Centro de los puntos rojos dibujados en covacsa-mapa.png (712×527), en % del ancho y alto
+// Centro de los puntos rojos dibujados en covacsa-mapa.webp (712×527), en % del ancho y alto
 const puntosMapa = [
   { x: 22.4, y: 20.52 },
   { x: 25.25, y: 29.86 },
@@ -23,7 +23,7 @@ const puntosMapa = [
   <!-- ============================================ -->
   <section class="relative pt-28 pb-28 md:pt-36 md:pb-40 overflow-hidden bg-covacsa-blue">
     <img
-      src="/bg_hero_covacsa.webp"
+      src={`${BASE}bg_hero_covacsa.webp`}
       alt=""
       width="1376"
       height="768"
@@ -99,7 +99,7 @@ const puntosMapa = [
         {marcas.map((marca) => (
           <li class="flex justify-center">
             <img
-              src={marca.local ?? `${IMG}/${marca.imagen}`}
+              src={`${BASE}${marca.imagen}`}
               alt={marca.nombre}
               width="300"
               height="80"
@@ -291,6 +291,9 @@ const puntosMapa = [
         <h2 class="text-3xl md:text-5xl font-black leading-tight">
           20 años trabajando para ofrecerte el mejor servicio con <span class="text-covacsa-red">entregas en tiempo récord</span>
         </h2>
+        <p class="text-gray-300 text-lg">
+          Brindamos soluciones industriales a tu empresa a través de una amplia gama de productos como válvulas de acero al carbón y tuberías de acero al carbón.
+        </p>
 
         <ul class="space-y-5">
           <li class="flex items-start gap-4">
@@ -309,7 +312,7 @@ const puntosMapa = [
       </div>
 
       <div class="relative gsap-reveal">
-        <img src={`${IMG}/covacsa-mapa.png`} alt="Mapa de cobertura de Covacsa en México" width="712" height="527" loading="lazy" class="w-full h-auto" />
+        <img src={`${IMG}/covacsa-mapa.webp`} alt="Mapa de cobertura de Covacsa en México" width="712" height="527" loading="lazy" class="w-full h-auto" />
         {puntosMapa.map((punto, i) => (
           <span
             class="absolute w-[2%] aspect-square -translate-x-1/2 -translate-y-1/2"
@@ -333,7 +336,7 @@ const puntosMapa = [
   <!-- ============================================ -->
   <section id="contacto" class="relative pt-36 pb-24 bg-covacsa-gray-light overflow-hidden">
     <img
-      src="/bg_contacto2.webp"
+      src={`${BASE}bg_contacto2.webp`}
       alt=""
       aria-hidden="true"
       width="1000"

@@ -43,6 +43,12 @@ const labelClass = 'block text-xs font-bold uppercase text-covacsa-blue mb-2';
   <input type="hidden" name="utm_content" />
   <input type="hidden" name="utm_term" />
 
+  <!-- Honeypot antispam: invisible para personas; si llega con valor, no se envía -->
+  <div class="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+    <label for={`${id}-sitio`}>No llenar este campo</label>
+    <input id={`${id}-sitio`} name="sitio_web" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
   <button type="submit" class="w-full bg-covacsa-red hover:bg-red-700 text-white font-extrabold text-base py-4 rounded-xl transition-all duration-300 shadow-lg shadow-covacsa-red/30 hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-60 disabled:hover:translate-y-0">
     <i class="ph ph-paper-plane-tilt text-xl"></i>
     <span>Enviar</span>
@@ -52,6 +58,10 @@ const labelClass = 'block text-xs font-bold uppercase text-covacsa-blue mb-2';
 </form>
 
 <script>
+  import { BASE, CONTACTO } from '../data/covacsa';
+
+  const TELEFONO = CONTACTO.telefono;
+  const CORREO = CONTACTO.correo;
   const params = new URLSearchParams(window.location.search);
 
   document.querySelectorAll<HTMLFormElement>('.lead-form').forEach((form) => {
@@ -63,14 +73,52 @@ const labelClass = 'block text-xs font-bold uppercase text-covacsa-blue mb-2';
       input.value = params.get(input.name) ?? '';
     });
 
-    form.addEventListener('submit', (event) => {
+    const status = form.querySelector<HTMLElement>('.lead-form-status');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const setStatus = (text: string, error = false) => {
+      if (!status) return;
+      status.textContent = text;
+      status.classList.toggle('text-covacsa-red', error);
+      status.classList.toggle('font-bold', error);
+    };
+
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!form.reportValidity()) return;
 
-      // TODO: conectar el envío. La LP actual hace POST a _send.php y redirige a gracias.php
-      const status = form.querySelector('.lead-form-status');
-      if (status) status.textContent = 'Formulario en desarrollo: el envío aún no está conectado.';
-      console.warn('[lead-form] Sin destino configurado.', Object.fromEntries(new FormData(form)));
+      const data = new FormData(form);
+      const gracias = `${BASE}gracias.html`;
+
+      // Bot: finge éxito sin enviar el lead
+      if (data.get('sitio_web')) {
+        window.location.href = gracias;
+        return;
+      }
+      data.delete('sitio_web');
+
+      if (button) button.disabled = true;
+      setStatus('Enviando…');
+
+      try {
+        // Mismo endpoint de la LP anterior: reenvía a Omnia y Ongoing (correo a ventas@covacsa.com.mx)
+        const res = await fetch(`${BASE}_send.php`, { method: 'POST', body: data });
+        const result = await res.json();
+
+        if (!result.estatus) {
+          setStatus(result.message || 'No pudimos enviar tus datos. Revisa la información e intenta de nuevo.', true);
+          if (button) button.disabled = false;
+          return;
+        }
+
+        const dataLayer = ((window as any).dataLayer ??= []);
+        dataLayer.push({ event: 'generate_lead', form_id: form.id });
+        form.reset();
+        window.location.href = gracias;
+      } catch (error) {
+        console.error('[lead-form]', error);
+        setStatus(`No pudimos enviar tus datos. Llámanos al ${TELEFONO} o escríbenos a ${CORREO}.`, true);
+        if (button) button.disabled = false;
+      }
     });
   });
 </script>
