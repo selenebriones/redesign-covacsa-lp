@@ -1,5 +1,9 @@
 node_modules/
 dist/
+dist-qa/
 .astro/
 .DS_Store
 .env
+
+# Credenciales de _send.php (plantilla en _config.example.php)
+public/_config.php

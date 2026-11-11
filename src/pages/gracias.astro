@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { BASE, CONTACTO } from '../data/covacsa';
+---
+
+<Layout title="Gracias | Covacsa" noindex>
+  <section class="relative min-h-[80vh] flex items-center pt-32 pb-24 bg-covacsa-blue overflow-hidden">
+    <img
+      src={`${BASE}bg_hero_covacsa.webp`}
+      alt=""
+      width="1376"
+      height="768"
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-covacsa-blue/90" aria-hidden="true"></div>
+
+    <div class="relative max-w-2xl mx-auto px-6 text-center text-white space-y-6">
+      <span class="mx-auto w-16 h-16 bg-covacsa-red rounded-2xl flex items-center justify-center text-3xl shadow-lg" aria-hidden="true">
+        <i class="ph ph-check-circle"></i>
+      </span>
+      <h1 class="text-4xl md:text-5xl font-black tracking-tight">
+        ¡Muchas <span class="text-covacsa-red">gracias</span> por contactarnos!
+      </h1>
+      <p class="text-lg text-gray-200">
+        Recibimos tus datos, en breve un asesor se comunicará contigo.
+      </p>
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 pt-2">
+        <a href={BASE} class="inline-flex items-center justify-center gap-2 bg-covacsa-red hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl transition-colors">
+          <i class="ph ph-arrow-left text-lg"></i>
+          <span>Ir a inicio</span>
+        </a>
+        <a href={CONTACTO.telefonoHref} class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-4 rounded-xl border border-white/30 transition-colors">
+          <i class="ph ph-phone text-xl text-covacsa-red"></i>
+          <span>{CONTACTO.telefono}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
