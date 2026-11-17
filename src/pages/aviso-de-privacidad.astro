@@ -1,0 +1,247 @@
+---
+// Aviso de privacidad integral conforme a la Ley Federal de Protección de Datos Personales en Posesión
+// de los Particulares (DOF 20-03-2025, última reforma DOF 14-11-2025). Requisitos: art. 15.
+// El aviso simplificado (art. 16 fr. II) está en el formulario (CotizaForm.astro) y enlaza aquí.
+import Layout from '../layouts/Layout.astro';
+import { BASE, CONTACTO, RESPONSABLE, AVISO_PRIVACIDAD } from '../data/covacsa';
+
+const { razonSocial, nombreComercial, domicilio, correoPrivacidad } = RESPONSABLE;
+const nombre = razonSocial === nombreComercial ? razonSocial : `${razonSocial} (“${nombreComercial}”)`;
+
+const indice = [
+  ['responsable', 'Identidad y domicilio del responsable'],
+  ['datos', 'Datos personales que recabamos'],
+  ['finalidades', 'Finalidades del tratamiento'],
+  ['negativa', 'Cómo negarse a las finalidades secundarias'],
+  ['remisiones', 'Encargados y transferencias'],
+  ['cookies', 'Cookies y tecnologías de rastreo'],
+  ['limitar', 'Cómo limitar el uso o divulgación de sus datos'],
+  ['arco', 'Derechos ARCO'],
+  ['revocacion', 'Revocación del consentimiento'],
+  ['seguridad', 'Conservación y seguridad'],
+  ['cambios', 'Cambios al aviso de privacidad'],
+  ['autoridad', 'Autoridad competente'],
+];
+---
+
+<Layout
+  title="Aviso de privacidad | Covacsa"
+  description="Aviso de privacidad integral de Covacsa: qué datos personales recabamos, para qué los usamos y cómo ejercer sus derechos ARCO."
+  noindex
+>
+  <section class="bg-covacsa-blue text-white pt-32 pb-14">
+    <div class="max-w-3xl mx-auto px-6">
+      <p class="text-xs font-bold uppercase tracking-widest text-covacsa-red mb-3">Protección de datos personales</p>
+      <h1 class="text-4xl md:text-5xl font-black tracking-tight">Aviso de privacidad integral</h1>
+      <p class="mt-4 text-gray-300 text-sm">Última actualización: {AVISO_PRIVACIDAD.actualizado}</p>
+    </div>
+  </section>
+
+  <article class="aviso max-w-3xl mx-auto px-6 py-14 text-[15px] leading-relaxed text-gray-700">
+    <p>
+      En cumplimiento de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares
+      (en adelante, la “Ley”), publicada en el Diario Oficial de la Federación el 20 de marzo de 2025, y demás
+      disposiciones aplicables, {nombre} pone a su disposición el presente aviso de privacidad para informarle
+      cómo tratamos los datos personales que nos proporciona.
+    </p>
+
+    <nav aria-label="Contenido" class="my-10 bg-covacsa-gray-light rounded-2xl p-6">
+      <p class="text-xs font-bold uppercase text-covacsa-blue mb-3">Contenido</p>
+      <ol class="list-decimal pl-5 space-y-1 text-sm marker:text-gray-400">
+        {indice.map(([id, texto]) => (
+          <li><a href={`#${id}`} class="text-covacsa-blue hover:text-covacsa-red underline-offset-2 hover:underline">{texto}</a></li>
+        ))}
+      </ol>
+    </nav>
+
+    <h2 id="responsable">1. Identidad y domicilio del responsable</h2>
+    <p>
+      {razonSocial} (en adelante, “Covacsa” o el “Responsable”), con domicilio en {domicilio}, es responsable
+      del tratamiento de sus datos personales.
+    </p>
+    <p>
+      Para cualquier asunto relacionado con este aviso o con sus datos personales puede contactarnos en <a href={`mailto:${correoPrivacidad}`}>{correoPrivacidad}</a> o al teléfono <a href={CONTACTO.telefonoHref}>{CONTACTO.telefono}</a>, de lunes a viernes en horario de oficina.
+    </p>
+
+    <h2 id="datos">2. Datos personales que recabamos</h2>
+    <p>Cuando usted llena nuestro formulario de cotización, nos contacta por teléfono, correo electrónico o mensajería, podemos recabar:</p>
+    <ul>
+      <li><strong>Datos de identificación:</strong> nombre y apellido.</li>
+      <li><strong>Datos de contacto:</strong> correo electrónico y número telefónico.</li>
+      <li><strong>Datos laborales o comerciales</strong>, si usted los incluye: empresa, puesto, ciudad y los detalles de los productos que desea cotizar.</li>
+      <li><strong>Datos de navegación:</strong> la campaña o el anuncio por el que llegó a este sitio (parámetros UTM), dirección IP, tipo de navegador y páginas visitadas. Vea la sección <a href="#cookies">Cookies y tecnologías de rastreo</a>.</li>
+    </ul>
+    <p>
+      <strong>No recabamos datos personales sensibles</strong> ni datos financieros o patrimoniales a través de este sitio.
+      Le pedimos no incluir este tipo de información en el campo de comentarios.
+    </p>
+
+    <h2 id="finalidades">3. Finalidades del tratamiento</h2>
+    <p><strong>Finalidades primarias.</strong> Son necesarias para atender su solicitud y para la relación comercial que, en su caso, se establezca con usted:</p>
+    <ul>
+      <li>Atender y responder su solicitud de cotización o información sobre válvulas, tuberías, bridas, conexiones y demás productos.</li>
+      <li>Contactarle por teléfono, correo electrónico o mensajería para dar seguimiento a su solicitud.</li>
+      <li>Elaborar y enviar cotizaciones y, en caso de concretarse la compra, gestionar pedidos, facturación, cobranza, entregas y garantías.</li>
+      <li>Cumplir las obligaciones legales y fiscales que derivan de la relación comercial.</li>
+    </ul>
+    <p><strong>Finalidades secundarias.</strong> No son necesarias para atender su solicitud, pero nos ayudan a darle un mejor servicio:</p>
+    <ul>
+      <li>Enviarle información sobre productos, promociones, novedades y eventos de Covacsa.</li>
+      <li>Realizar encuestas de calidad y satisfacción.</li>
+      <li>Elaborar estadísticas sobre el desempeño de nuestro sitio y de nuestras campañas publicitarias.</li>
+    </ul>
+
+    <h2 id="negativa">4. Cómo negarse a las finalidades secundarias</h2>
+    <p>
+      Si no desea que sus datos se traten para alguna o todas las finalidades secundarias, envíe un correo a <a href={`mailto:${correoPrivacidad}?subject=Negativa%20a%20finalidades%20secundarias`}>{correoPrivacidad}</a> con el asunto “Negativa a finalidades secundarias”, indicando su nombre, el correo o teléfono que nos proporcionó
+      y las finalidades a las que se niega. Puede hacerlo en cualquier momento.
+    </p>
+    <p>Su negativa no será motivo para dejar de atender su solicitud ni para negarle nuestros productos o servicios.</p>
+
+    <h2 id="remisiones">5. Encargados y transferencias</h2>
+    <p>
+      Para operar este sitio y atender su solicitud nos apoyamos en proveedores que tratan sus datos por cuenta de
+      Covacsa y conforme a nuestras instrucciones (encargados): servicios de alojamiento web, de envío de correo
+      electrónico, de gestión de clientes (CRM) y nuestra agencia de marketing digital. Estos proveedores están obligados
+      a mantener la confidencialidad de sus datos y a no usarlos para fines propios.
+    </p>
+    <p>
+      Covacsa <strong>no vende ni transfiere</strong> sus datos personales a terceros. Solo podrán transferirse sin su
+      consentimiento en los casos previstos en el artículo 36 de la Ley, por ejemplo, cuando lo exija una ley o una
+      autoridad competente, a empresas del mismo grupo que operen bajo las mismas políticas, o cuando sea necesario
+      para cumplir un contrato celebrado en su interés.
+    </p>
+    <p>
+      Si en el futuro fuera necesaria una transferencia que requiera su consentimiento, se lo solicitaremos antes
+      de realizarla.
+    </p>
+
+    <h2 id="cookies">6. Cookies y tecnologías de rastreo</h2>
+    <p>
+      Este sitio utiliza cookies y tecnologías similares de Google (Google Tag Manager, Google Analytics y Google Ads)
+      para medir las visitas, saber qué anuncio o campaña le trajo aquí y mejorar nuestra publicidad. Con ellas se
+      obtienen datos como su dirección IP, tipo de navegador y dispositivo, páginas visitadas, tiempo de navegación
+      y el origen de la visita.
+    </p>
+    <p>
+      Puede bloquear o eliminar las cookies desde la configuración de su navegador, o desactivar la medición de
+      Google Analytics con el <a href="https://tools.google.com/dlpage/gaoptout?hl=es" target="_blank" rel="noopener">complemento oficial de Google</a>.
+      Para conocer cómo Google usa estos datos, consulte su <a href="https://policies.google.com/technologies/partner-sites?hl=es" target="_blank" rel="noopener">política sobre sitios de socios</a>.
+      Bloquear las cookies no le impide usar el sitio ni enviar el formulario.
+    </p>
+
+    <h2 id="limitar">7. Cómo limitar el uso o divulgación de sus datos</h2>
+    <p>Además de los mecanismos de las secciones 4 y 8, puede limitar el uso de sus datos de las siguientes formas:</p>
+    <ul>
+      <li>Pedir que lo incluyamos en nuestra lista interna de exclusión, escribiendo a <a href={`mailto:${correoPrivacidad}`}>{correoPrivacidad}</a>, para no recibir comunicaciones promocionales.</li>
+      <li>Darse de baja con el enlace que incluyen nuestros correos promocionales.</li>
+      <li>Inscribirse en el <a href="https://repep.profeco.gob.mx/" target="_blank" rel="noopener">Registro Público para Evitar Publicidad (REPEP)</a> de la Procuraduría Federal del Consumidor.</li>
+    </ul>
+
+    <h2 id="arco">8. Derechos ARCO</h2>
+    <p>
+      Usted tiene derecho a <strong>acceder</strong> a sus datos personales y conocer cómo los tratamos;
+      a solicitar su <strong>rectificación</strong> si son inexactos o están incompletos; a pedir su <strong>cancelación</strong> cuando considere que no se tratan conforme a la Ley; y a <strong>oponerse</strong> a su tratamiento para fines específicos. Estos son los derechos ARCO.
+    </p>
+    <p>
+      Para ejercerlos, envíe su solicitud a <a href={`mailto:${correoPrivacidad}?subject=Solicitud%20de%20derechos%20ARCO`}>{correoPrivacidad}</a> con el asunto “Solicitud de derechos ARCO”. Conforme al artículo 28 de la Ley, su solicitud debe incluir:
+    </p>
+    <ol>
+      <li>Su nombre y un domicilio o correo electrónico para recibir la respuesta.</li>
+      <li>Copia de una identificación oficial vigente o, si actúa mediante representante, el documento que acredite su representación y la identificación de ambos.</li>
+      <li>La descripción clara y precisa de los datos sobre los que desea ejercer su derecho (salvo en el caso de acceso).</li>
+      <li>El derecho que desea ejercer o lo que solicita.</li>
+      <li>Cualquier otro elemento o documento que facilite la localización de sus datos. En caso de rectificación, indique las modificaciones y adjunte la documentación que las sustente.</li>
+    </ol>
+    <p>
+      Le comunicaremos nuestra respuesta en un plazo máximo de <strong>20 días hábiles</strong> contados desde que
+      recibamos su solicitud, al mismo correo desde el que la envió. Si resulta procedente, la haremos efectiva dentro
+      de los <strong>15 días hábiles</strong> siguientes a la fecha de la respuesta. Estos plazos podrán ampliarse una sola vez
+      por un periodo igual cuando las circunstancias lo justifiquen.
+    </p>
+    <p>
+      El ejercicio de los derechos ARCO es gratuito. Solo podrán cobrarse, en su caso, los costos de reproducción, copias
+      o envío. Entregaremos los datos en archivo electrónico o en copias simples.
+    </p>
+
+    <h2 id="revocacion">9. Revocación del consentimiento</h2>
+    <p>
+      Puede revocar en cualquier momento el consentimiento que nos haya otorgado para el tratamiento de sus datos,
+      sin efectos retroactivos, siguiendo el mismo procedimiento descrito para los derechos ARCO, con el asunto
+      “Revocación del consentimiento”. Tenga en cuenta que no siempre podremos atender su solicitud de inmediato,
+      ya que alguna obligación legal puede requerir que sigamos tratando sus datos, y que la revocación puede
+      impedirnos seguir atendiendo su solicitud o relación comercial.
+    </p>
+
+    <h2 id="seguridad">10. Conservación y seguridad</h2>
+    <p>
+      Conservaremos sus datos solo durante el tiempo necesario para cumplir las finalidades de este aviso y las obligaciones
+      legales aplicables. Después los bloquearemos y los eliminaremos de forma segura. Hemos establecido medidas de seguridad
+      administrativas, técnicas y físicas para proteger sus datos contra daño, pérdida, alteración, destrucción o uso, acceso o
+      tratamiento no autorizado.
+    </p>
+
+    <h2 id="cambios">11. Cambios al aviso de privacidad</h2>
+    <p>
+      Este aviso puede modificarse por cambios en la legislación, en nuestros servicios o en nuestras prácticas de privacidad.
+      Cualquier cambio se publicará en esta misma página, <a href={`${BASE}${AVISO_PRIVACIDAD.ruta}`}>covacsa.com.mx/valvulas-y-bridas/{AVISO_PRIVACIDAD.ruta}</a>,
+      con la fecha de la última actualización al inicio. Le recomendamos consultarla periódicamente.
+    </p>
+
+    <h2 id="autoridad">12. Autoridad competente</h2>
+    <p>
+      Si considera que su derecho a la protección de datos personales ha sido vulnerado, puede acudir ante la <strong>Secretaría Anticorrupción y Buen Gobierno</strong>, autoridad encargada de vigilar el cumplimiento de la Ley.
+    </p>
+
+    <p class="mt-12 pt-6 border-t border-gray-200 text-sm text-gray-500">
+      Fecha de última actualización: {AVISO_PRIVACIDAD.actualizado}.
+    </p>
+  </article>
+</Layout>
+
+<style>
+  .aviso h2 {
+    scroll-margin-top: 6rem;
+    margin: 2.75rem 0 1rem;
+    font-size: 1.375rem;
+    line-height: 1.3;
+    font-weight: 800;
+    color: var(--color-covacsa-blue);
+  }
+  .aviso > p {
+    margin: 0 0 1rem;
+  }
+  .aviso > ul,
+  .aviso > ol {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+  .aviso > ul {
+    list-style: disc;
+  }
+  .aviso > ol {
+    list-style: decimal;
+  }
+  .aviso > ul > li,
+  .aviso > ol > li {
+    margin-bottom: 0.5rem;
+    padding-left: 0.25rem;
+  }
+  .aviso > ul > li::marker,
+  .aviso > ol > li::marker {
+    color: var(--color-covacsa-red);
+  }
+  .aviso strong {
+    color: var(--color-covacsa-dark);
+  }
+  .aviso > :is(p, ul, ol) a {
+    color: var(--color-covacsa-blue);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
+  }
+  .aviso > :is(p, ul, ol) a:hover {
+    color: var(--color-covacsa-red);
+  }
+</style>

@@ -1,4 +1,6 @@
 ---
+import { BASE, RESPONSABLE, AVISO_PRIVACIDAD } from '../data/covacsa';
+
 interface Props {
   id: string;
   class?: string;
@@ -55,6 +57,14 @@ const labelClass = 'block text-xs font-bold uppercase text-covacsa-blue mb-2';
   </button>
 
   <p class="lead-form-status text-center text-xs text-gray-500 min-h-4" aria-live="polite"></p>
+
+  <!-- Aviso de privacidad simplificado (LFPDPPP 2025, art. 16 fr. II: art. 15 fr. I a IV + liga al integral) -->
+  <p class="text-[11px] leading-snug text-gray-500">
+    {RESPONSABLE.razonSocial}, con domicilio en {RESPONSABLE.domicilio}, usará tus datos de identificación y contacto
+    para atender tu solicitud de cotización y darle seguimiento y, de forma secundaria, para enviarte información de
+    productos y promociones. Puedes negarte a esto último o limitar el uso de tus datos escribiendo a {RESPONSABLE.correoPrivacidad}.
+    Consulta el <a href={`${BASE}${AVISO_PRIVACIDAD.ruta}`} class="underline font-semibold text-covacsa-blue hover:text-covacsa-red">aviso de privacidad integral</a>.
+  </p>
 </form>
 
 <script>
