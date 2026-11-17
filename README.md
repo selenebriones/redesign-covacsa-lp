@@ -72,6 +72,8 @@ Si falta `public/_config.php` al compilar, el sitio se genera igual, pero el for
 
 ## Pendientes
 
-- [ ] Enlazar el aviso de privacidad (LFPDPPP) en el formulario y en el footer. Covacsa tiene que proporcionarlo.
+- [x] Aviso de privacidad integral en `aviso-de-privacidad.html`, conforme a la LFPDPPP de 2025 (DOF 20-03-2025, última reforma 14-11-2025). El aviso simplificado está en el formulario y el enlace al integral, en el footer.
+- [ ] Confirmar con Covacsa el **régimen societario** (¿S.A. de C.V.?) de la razón social "COMERCIALIZADORA DE VALVULAS Y CONEXIONES GV", el domicilio y el correo para derechos ARCO. Se cambian en `RESPONSABLE`, en `src/data/covacsa.ts`. Hoy usa el domicilio de covacsa.com.mx (el municipio se dedujo del C.P.) y ventas@covacsa.com.mx.
+- [ ] Que el área legal de Covacsa revise el aviso antes de publicarlo.
 - [ ] En GTM, confirmar que la conversión de Ads se dispara con `generate_lead` o con la vista de `gracias.html`.
 - [ ] En el servidor, redirigir `www` y `http` a `https://covacsa.com.mx/valvulas-y-bridas/`. Hoy la carpeta responde en las cuatro variantes; el canonical lo mitiga, pero la redirección es lo correcto.

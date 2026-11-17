@@ -1,7 +1,7 @@
 ---
 import '@phosphor-icons/web/regular';
 import '../styles/global.css';
-import { BASE, IMG, CONTACTO, GTM_ID, ES_QA, URL_PRODUCCION } from '../data/covacsa';
+import { BASE, IMG, CONTACTO, GTM_ID, ES_QA, URL_PRODUCCION, AVISO_PRIVACIDAD } from '../data/covacsa';
 
 interface Props {
   title: string;
@@ -142,6 +142,9 @@ const nav = [
         <p class="max-w-7xl mx-auto px-6 py-5 text-xs text-center md:text-left">
           {new Date().getFullYear()}© Covacsa. Todos los derechos reservados. Diseño y desarrollo por{" "}
           <a href="https://www.futurite.com/" class="underline hover:text-white" target="_blank" rel="noopener">agencia de marketing digital Futurité</a>.
+          <span class="block sm:inline sm:ml-3 mt-2 sm:mt-0">
+            <a href={`${BASE}${AVISO_PRIVACIDAD.ruta}`} class="underline hover:text-white">Aviso de privacidad</a>
+          </span>
         </p>
       </div>
     </footer>
