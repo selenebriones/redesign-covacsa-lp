@@ -74,7 +74,7 @@ Si falta `public/_config.php` al compilar, el sitio se genera igual, pero el for
 
 - [x] Aviso de privacidad integral en `aviso-de-privacidad.html`, conforme a la LFPDPPP de 2025 (DOF 20-03-2025, última reforma 14-11-2025). El aviso simplificado está en el formulario y el enlace al integral, en el footer.
 - [x] Covacsa confirmó la razón social (COMERCIALIZADORA DE VALVULAS Y CONEXIONES GV, S.A. de C.V.), el domicilio y el correo para derechos ARCO (ventas@covacsa.com.mx). Están en `RESPONSABLE`, en `src/data/covacsa.ts`.
-- [ ] El equipo de Covacsa revisará el contenido del aviso antes de publicarlo. Esperar su visto bueno o sus cambios.
+- [x] El equipo de Covacsa revisó y aprobó el contenido del aviso (2026-11-19).
 
 ### A cargo de terceros
 
