@@ -20,14 +20,12 @@ export const CONTACTO = {
 };
 
 // Datos del responsable para el aviso de privacidad (LFPDPPP 2025, art. 15 fr. I).
-// Razón social proporcionada por Covacsa (2026-11-17), tal como la dieron. PENDIENTE: confirmar el régimen
-// societario (¿S.A. de C.V.?) y el domicilio, que es el que publica covacsa.com.mx (el municipio se dedujo del C.P.).
+// Razón social, régimen (S.A. de C.V.), domicilio y correo confirmados por Covacsa el 2026-11-19.
 export const RESPONSABLE = {
-  razonSocial: 'COMERCIALIZADORA DE VALVULAS Y CONEXIONES GV',
+  razonSocial: 'COMERCIALIZADORA DE VALVULAS Y CONEXIONES GV, S.A. de C.V.',
   nombreComercial: 'Covacsa',
   domicilio: 'José Ma. Morelos 201, Col. Cabecera Municipal, C.P. 66050, General Escobedo, Nuevo León, México',
-  // Correo para derechos ARCO y para revocar el consentimiento. Si Covacsa abre uno exclusivo
-  // (p. ej. privacidad@covacsa.com.mx), basta con cambiarlo aquí.
+  // Correo para derechos ARCO y para revocar el consentimiento (Covacsa pidió mantener el de ventas).
   correoPrivacidad: 'ventas@covacsa.com.mx',
 };
 
